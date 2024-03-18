@@ -8,6 +8,9 @@ metadata:
 {{ include "zookeeper.commonLabels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicas }}
+  {{- if .Values.maxUnavailableReplicas }}
+  maxUnavailableReplicas: {{ .Values.maxUnavailableReplicas }}
+  {{- end }}
   image:
     repository: {{ .Values.image.repository }}
     tag: {{ .Values.image.tag }}
@@ -73,6 +76,10 @@ spec:
     {{- if .Values.pod.affinity }}
     affinity:
 {{ toYaml .Values.pod.affinity | indent 6 }}
+    {{- end }}
+    {{- if .Values.pod.topologySpreadConstraints }}
+    topologySpreadConstraints:
+{{ toYaml .Values.pod.topologySpreadConstraints | indent 6 }}
     {{- end }}
     {{- if .Values.pod.resources }}
     resources:

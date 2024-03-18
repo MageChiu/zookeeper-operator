@@ -1,8 +1,9 @@
 replicas: 3
+maxUnavailableReplicas:
 
 image:
   repository: pravega/zookeeper
-  tag: 0.2.13
+  tag: 0.2.15
   pullPolicy: IfNotPresent
 
 triggerRollingRestart: false
@@ -35,6 +36,7 @@ pod:
   # labels: {}
   # nodeSelector: {}
   # affinity: {}
+  # topologySpreadConstraints: {}
   # resources: {}
   # tolerations: []
   # env: []

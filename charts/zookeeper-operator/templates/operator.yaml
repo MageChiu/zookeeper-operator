@@ -32,10 +32,13 @@ spec:
       - name: {{ template "zookeeper-operator.fullname" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ int .Values.metricsPort }}
+          name: metrics
         command:
         - zookeeper-operator
         args:
-          - "--metrics-bind-address=127.0.0.1:6000"
+        - -metrics-bind-address={{ .Values.metricsBindAddress }}:{{ int .Values.metricsPort }}
         {{- if .Values.disableFinalizer }}
         - -disableFinalizer
         {{- end }}
